@@ -33,9 +33,12 @@
       </div>
 
       <div class="bg-white rounded-lg shadow-md p-6">
-        <select (change)="onFiliereChange($event)">
-          <option *ngFor="let filiere of filieres" [value]="filiere.id">{{filiere.nom}}</option>
-        </select>
+        <div class="flex gap-2">
+          <label>Filliere : </label>
+          <select (change)="onFiliereChange($event)">
+            <option *ngFor="let filiere of filieres" [value]="filiere.id">{{filiere.nom}}</option>
+          </select>
+        </div>
         <canvas id="pieChart"></canvas>
       </div>
     </div>
