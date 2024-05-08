@@ -45,5 +45,19 @@ export class FilieresService {
 			responseType: 'text' as 'json'
 		});
 	}
+  countFilieres(): Observable<any> {
+    return this.http.get(`${this.url}/count`, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      }),
+    });
+  }
 
+  getModulesTotalHoursByFiliere(id: number) : Observable<any> {
+    return this.http.get(`${this.url}/${id}/modules/total-hours`, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      }),
+    });
+  }
 }

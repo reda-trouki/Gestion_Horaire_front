@@ -56,4 +56,11 @@ export class ModulesService {
             responseType: 'text' as 'json'
         });
     }
+    countModules(): Observable<any> {
+      return this.http.get(`${this.url}/count`, {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.token}`
+        }),
+      });
+    }
 }

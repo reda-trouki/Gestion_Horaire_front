@@ -18,7 +18,11 @@ import { FilieresService } from '../../services/filieres.service';
 })
 export class ModulesComponent {
 	constructor(private moduleService: ModulesService, private ensiegnantesService: EnseignantesService,private filieresService: FilieresService) {
-		this.moduleService.getModules().subscribe(modules => this.modules = modules);
+		this.moduleService.getModules().subscribe(modules => {
+      this.modules = modules;
+      console.log(this.modules);
+  });
+
 		this.ensiegnantesService.getEnseignants().subscribe(
 			enseignants => {
 				this.ensiegnants = enseignants
@@ -54,7 +58,7 @@ export class ModulesComponent {
 		this.validate();
 		if (this.action==='Ajouter') {
 			this.add();
-		} 
+		}
 		else{
 			this.update()
 		}
@@ -114,13 +118,13 @@ export class ModulesComponent {
 			error=>{
 				this.validationError = true;
 				this.validationMessage = error.error;
-			
+
 			}
 		);
 	}
 	set_update(module:Module){
 		this.action = 'Modifier';
-		
+
 		this.module.intitule = module.intitule;
 		this.module.vhcour = module.vhcour;
 		this.module.vhtd = module.vhtd;
@@ -129,7 +133,7 @@ export class ModulesComponent {
 
 		this.enseignant_id = module.enseignant.email;
 		this.filiere_id = module.filiere.id;
-		
+
 	}
 	update(){
 		this.moduleService.updateModule( this.module,this.enseignant_id,this.filiere_id).subscribe(
@@ -156,10 +160,10 @@ export class ModulesComponent {
 			error=>{
 				this.validationError = true;
 				this.validationMessage = error.error;
-			
+
 			}
 		);
-	
+
 	}
 	delete(id: string) {
 		this.moduleService.delete(id).subscribe(

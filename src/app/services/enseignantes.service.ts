@@ -44,4 +44,11 @@ export class EnseignantesService {
       responseType: 'text' as 'json'
     });
   }
+  countEnseignants(): Observable<any> {
+    return this.http.get(this.apiUrl + "/count", {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      }),
+    });
+  }
 }
