@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../../shared/models/User";
+import {routes} from "../app.routes";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -12,7 +14,7 @@ export class UserService {
   public currentUser: Observable<User | null>;
   private url = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     // @ts-ignore
     this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -45,6 +47,28 @@ export class UserService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.http.get(`${this.url}/api/auth/logout`).subscribe();
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
+    this.http.get(`${this.url}/api/auth/logout`,{ headers}).subscribe(() => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      this.router.navigate(['/login']); // navigate to login page
+    });
+  }
+  updateUser(updatedUser: User){
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    });
+    return this.http.put<User>(`${this.url}/api/Enseignants/update`, updatedUser, { headers, responseType: 'text' as 'json' }).pipe(
+      tap(() => {
+        this.setCurrentUser(updatedUser);
+        this.currentUserSubject.next(updatedUser);
+      })
+    );
   }
 }

@@ -14,8 +14,8 @@
   <div *ngIf="showform" class="bg-white p-4 rounded-lg shadow dark:bg-gray-700 animate-dropIn">
     <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{action}} une filière</h4>
     <!-- Add form elements here for adding a new filière -->
-    <div *ngIf="this.validationError" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      <span class="font-medium">Erreur !</span> {{this.validationMessage}}
+    <div *ngIf="validationMessage" class="p-4 rounded" [ngClass]="{'bg-green-500 text-white': !validationError, 'bg-red-500 text-white': validationError}">
+      {{ validationMessage }}
     </div>
     <form>
       <div class="mt-4">

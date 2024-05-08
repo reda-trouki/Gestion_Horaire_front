@@ -8,6 +8,7 @@ import {ChartsDataComponent} from "./admin-dashboard/charts-data/charts-data.com
 import {ModulesComponent} from "./admin-dashboard/modules/modules.component";
 import {EnseignantesComponent} from "./admin-dashboard/enseignantes/enseignantes.component";
 import {FilieresComponent} from "./admin-dashboard/filieres/filieres.component";
+import {ProfileComponent} from "./admin-dashboard/profile/profile.component";
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin-dashboard',
@@ -35,10 +36,14 @@ export const routes: Routes = [
       {
         path : 'enseignants',
         component: EnseignantesComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
       }
     ]
   },
   {path: 'user-page', component: UserPageComponent, canActivate: [AuthGardService, RoleGuardService], data: { allowedRoles: ['ENSEIGNANT', 'ADMIN'] }},
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to login page if no route matches
-  //{ path: '**', redirectTo: '/login' }, // Redirect to login page if no route matches
+  { path: '**', redirectTo: '/login' }, // Redirect to login page if no route matches
 ];

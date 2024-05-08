@@ -43,7 +43,7 @@ export class FilieresComponent implements OnInit {
 		this.filieresService.addFiliere(fl).subscribe(filiere => {
 			this.filieres.push(filiere);
 			this.showform = false;
-
+      this.validationMessage = 'filère ajoutée avec succès';
 		}, error => {
 			this.validationError = true;
 			this.validationMessage = error.error;
@@ -53,8 +53,9 @@ export class FilieresComponent implements OnInit {
 		this.action = 'Modifier';
 		this.filiere_nom = fl.nom;
 		this.filiere = fl;
+    this.validationMessage = '';
 	}
-	
+
 	update(){
 		if(this.filiere_nom == null || this.filiere_nom == '' || !/^[a-zA-Z0-9 ]+$/.test(this.filiere_nom)) {
 			this.validationError = true;
@@ -66,16 +67,17 @@ export class FilieresComponent implements OnInit {
 		this.filieresService.updateFiliere(this.filiere).subscribe(filiere => {
 			this.filieres = this.filieres.map(f => f.id == filiere.id ? filiere : f);
 			this.showform = false;
+      this.validationMessage = 'filère modifiée avec succès';
 		}, error => {
 			this.validationError = true;
 			this.validationMessage = error.error;
 		});
-	
+
 	}
 	handleClick(){
 		if (this.action==='Ajouter') {
 			this.addFiliere()
-		} 
+		}
 		else{
 			this.update()
 		}
@@ -83,6 +85,11 @@ export class FilieresComponent implements OnInit {
 	deleteFiliere(id: number) {
 		this.filieresService.deleteFiliere(id).subscribe(() => {
 			this.filieres = this.filieres.filter(f => f.id !=id);
-		});
+      this.validationMessage = 'filère supprimée avec succès';
+		}, (error: { error: string; }) => {
+      this.validationError = true;
+      this.validationMessage = error.error;
+      }
+    );
 	}
 }

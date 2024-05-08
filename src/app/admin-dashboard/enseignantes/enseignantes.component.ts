@@ -5,13 +5,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { initFlowbite } from 'flowbite';
 import {EnseignantesService} from "../../services/enseignantes.service";
+import {User} from "../../../shared/models/User";
+import {UserService} from "../../services/user.service";
+import {FilterPipe} from "../../FilterPipe";
 
 @Component({
   selector: 'app-enseignants',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule, FilterPipe],
   templateUrl: './enseignantes.component.html',
-  styleUrl: './enseignantes.component.css'
+  styleUrl: './enseignantes.component.css',
 })
 export class EnseignantesComponent implements OnInit {
 	showform:boolean = false;
@@ -25,15 +28,21 @@ export class EnseignantesComponent implements OnInit {
   old_ens_password= '';
 	validationError:boolean = false;
 	validationMessage:string = '';
-	constructor(private enseignantsService: EnseignantesService) {
+  user: User = {} as User;
+	constructor(private enseignantsService: EnseignantesService, private userService: UserService) {
 		this.enseignantsService.getEnseignants().subscribe(enseignants => this.enseignants = enseignants);
-	}
+    this.emailNotCurrentUser = this.emailNotCurrentUser.bind(this);
+  }
 	ngOnInit(): void {
 		initFlowbite();
+    this.user = this.userService.getUser();
 	}
 	ngAfterViewInit(): void {
 		initFlowbite();
 	}
+  emailNotCurrentUser(enseignant: Enseignant) {
+    return enseignant.email !== this.user.email;
+  }
 	addEnseignant() {
 		//test if name is not empty and name is valid and not containing special characters
 		if(this.enseignant_nom == null || this.enseignant_nom == '' || !/^[a-zA-Z0-9 ]+$/.test(this.enseignant_nom)) {
