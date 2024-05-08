@@ -44,7 +44,7 @@
       <li>
         <a (click)="logout()" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 			    <i class="fa-solid fa-right-from-bracket"></i>
-          <span class="flex-1 ms-3 whitespace-nowrap">Se déconnecter</span>
+          <span class="flex-1 ms-3 whitespace-nowrap cursor-pointer">Se déconnecter</span>
         </a>
       </li>
 
@@ -82,7 +82,7 @@
               </button>
               <div id="dropDownMenu" *ngIf="isDropdownVisible"  class="absolute right-4 mt-32 w-48 bg-white rounded-md shadow-lg py-2 z-50">
                 <a href routerLink="profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                <p (click)="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</p>
+                <p (click)="logout()" class=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</p>
               </div>
             </div>
           </div>

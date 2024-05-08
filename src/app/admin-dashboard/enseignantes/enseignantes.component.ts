@@ -7,12 +7,11 @@ import { initFlowbite } from 'flowbite';
 import {EnseignantesService} from "../../services/enseignantes.service";
 import {User} from "../../../shared/models/User";
 import {UserService} from "../../services/user.service";
-import {FilterPipe} from "../../FilterPipe";
 
 @Component({
   selector: 'app-enseignants',
   standalone: true,
-  imports: [CommonModule,FormsModule, FilterPipe],
+  imports: [CommonModule,FormsModule],
   templateUrl: './enseignantes.component.html',
   styleUrl: './enseignantes.component.css',
 })
@@ -42,6 +41,9 @@ export class EnseignantesComponent implements OnInit {
 	}
   emailNotCurrentUser(enseignant: Enseignant) {
     return enseignant.email !== this.user.email;
+  }
+  get enseignantsList(){
+    return this.enseignants.filter(this.emailNotCurrentUser);
   }
 	addEnseignant() {
 		//test if name is not empty and name is valid and not containing special characters

@@ -71,7 +71,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let enseignant of enseignants | filter:emailNotCurrentUser"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+				<tr *ngFor="let enseignant of enseignantsList"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td scope="row" class="px-6 py-4 font-medium text-lg text-gray-900 whitespace-nowrap dark:text-white">
 						{{enseignant.nom}}
 					</td>
