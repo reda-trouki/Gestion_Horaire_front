@@ -167,7 +167,7 @@ export class InterventionsComponent {
 
 	}
 	delete(id: InterventionID) {
-		this.interventionsService.delete(id).subscribe(
+		this.interventionsService.delete(id.enseignantID,id.moduleID).subscribe(
 			() => {
 			this.interventions = this.interventions.filter(m => m.id !=id);
 		});

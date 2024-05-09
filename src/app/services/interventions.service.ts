@@ -47,8 +47,8 @@ export class InterventionsService {
 			params: params
 		});
 	}
-    delete(id: InterventionID): any {
-        return this.http.delete(`${this.url}/${id}`, {
+    delete(idEnseignant:string ,idModule:string ): any {
+        return this.http.delete(`${this.url}/${idEnseignant}/${idModule}`, {
             headers: new HttpHeaders({
                 'Authorization': `Bearer ${this.token}`
             }),
