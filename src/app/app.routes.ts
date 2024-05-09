@@ -9,6 +9,7 @@ import {ModulesComponent} from "./admin-dashboard/modules/modules.component";
 import {EnseignantesComponent} from "./admin-dashboard/enseignantes/enseignantes.component";
 import {FilieresComponent} from "./admin-dashboard/filieres/filieres.component";
 import {ProfileComponent} from "./admin-dashboard/profile/profile.component";
+import { InterventionsComponent } from './admin-dashboard/interventions/interventions.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin-dashboard',
@@ -36,6 +37,10 @@ export const routes: Routes = [
       {
         path : 'enseignants',
         component: EnseignantesComponent
+      },
+      {
+        path : 'interventions',
+        component: InterventionsComponent
       },
       {
         path: 'profile',

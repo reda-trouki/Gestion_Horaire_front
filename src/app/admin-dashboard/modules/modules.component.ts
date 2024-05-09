@@ -20,7 +20,7 @@ export class ModulesComponent {
 	constructor(private moduleService: ModulesService, private ensiegnantesService: EnseignantesService,private filieresService: FilieresService) {
 		this.moduleService.getModules().subscribe(modules => {
       this.modules = modules;
-      console.log(this.modules);
+    //   console.log(this.modules);
   });
 
 		this.ensiegnantesService.getEnseignants().subscribe(
