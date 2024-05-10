@@ -124,7 +124,7 @@ export class InterventionsComponent {
 	}
 	set_update(interv:Intervention,){
 		this.action = 'Modifier';
-		
+
 		this.intervention.intitule = interv.intitule;
 		this.intervention.vhcourInterv = interv.vhcourInterv;
 		this.intervention.vhtdInterv = interv.vhtdInterv;
@@ -133,7 +133,7 @@ export class InterventionsComponent {
 		this.intervention.id=interv.id;
 
 		this.enseignant_id = interv.enseignant.email;
-		this.module_id = interv.module as unknown as string;
+		this.module_id = interv.module.intitule as unknown as string;
 
 	}
 	update(){
