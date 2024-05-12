@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Enseignant } from '../../shared/models/Enseignant';
 import {AuthService} from "./auth/auth.service";
+import { Module } from '../../shared/models/Module';
+import {Intervention} from "../../shared/models/Intervention";
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +48,20 @@ export class EnseignantesService {
   }
   countEnseignants(): Observable<any> {
     return this.http.get(this.apiUrl + "/count", {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      }),
+    });
+  }
+  getUserModules(email: string): Observable<Module[]> {
+    return this.http.get<Module[]>(this.apiUrl + "/" + email + "/modules", {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.token}`
+      }),
+    });
+  }
+  getUserInterventions(email: string): Observable<Intervention[]> {
+    return this.http.get<Intervention[]>(this.apiUrl + "/" + email + "/interventions", {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.token}`
       }),

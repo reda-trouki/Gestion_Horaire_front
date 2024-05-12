@@ -10,6 +10,8 @@ import {EnseignantesComponent} from "./admin-dashboard/enseignantes/enseignantes
 import {FilieresComponent} from "./admin-dashboard/filieres/filieres.component";
 import {ProfileComponent} from "./admin-dashboard/profile/profile.component";
 import { InterventionsComponent } from './admin-dashboard/interventions/interventions.component';
+import {UserModulesComponent} from "./user-page/user-modules/user-modules.component";
+import {UserInterventionsComponent} from "./user-page/user-interventions/user-interventions.component";
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin-dashboard',
@@ -48,7 +50,21 @@ export const routes: Routes = [
       }
     ]
   },
-  {path: 'user-page', component: UserPageComponent, canActivate: [AuthGardService, RoleGuardService], data: { allowedRoles: ['ENSEIGNANT', 'ADMIN'] }},
+  {
+    path: 'user-page',
+    component: UserPageComponent,
+    canActivate: [AuthGardService, RoleGuardService],
+    data: { allowedRoles: ['ENSEIGNANT', 'ADMIN'] },
+    children: [
+      {
+        path: '',
+        redirectTo: 'modules',
+        pathMatch: 'full'
+      },
+      {path: 'modules', component: UserModulesComponent},
+      {path: 'interventions', component: UserInterventionsComponent},
+    ]
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to login page if no route matches
   { path: '**', redirectTo: '/login' }, // Redirect to login page if no route matches
 ];

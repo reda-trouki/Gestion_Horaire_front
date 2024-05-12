@@ -95,11 +95,11 @@ export class ChartsDataComponent implements OnInit {
 
   updatePieChart(filiereId: number): void {
       this.filliereService.getModulesTotalHoursByFiliere(filiereId).subscribe(modules => {
-        console.log(modules);
+        //console.log(modules);
         const labels = modules.map((module: { moduleName: any; }) => module.moduleName);
         const data = modules.map((module: { totalHours: any; }) => module.totalHours);
-        console.log(labels);
-        console.log(data);
+        //console.log(labels);
+        //console.log(data);
         if (this.pieChart) {
           this.pieChart.destroy();
         }
