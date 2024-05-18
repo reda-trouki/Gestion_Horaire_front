@@ -36,6 +36,9 @@ export class ModulesService {
 		});
 	}
 	updateModule( module: any, enseignant_id: string, filiere_id: number): Observable<Module> {
+    if (filiere_id === undefined || enseignant_id === undefined) {
+      throw new Error('filiere_id or enseignant_id is undefined');
+    }
 		const params = new HttpParams()
 			.set('idFiliere', filiere_id.toString())
 			.set('idEnseignant', enseignant_id);
@@ -63,4 +66,6 @@ export class ModulesService {
         }),
       });
     }
+
+
 }

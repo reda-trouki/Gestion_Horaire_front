@@ -40,35 +40,21 @@
   <div *ngIf="this.filieres.length<=0" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
     <span class="font-medium">Aucune filière n'a été trouvée!</span> Veuillez créer des filières.
   </div>
-  <div *ngIf="this.filieres.length>0" class="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3 text-gray-900">
-          Nom de filière
-        </th>
-        <th scope="col" class="px-6 py-3 text-gray-900">
-          Actions
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let filiere of filieres" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-        <th scope="row" class="px-6 py-4 font-medium text-lg text-gray-900 whitespace-nowrap dark:text-white">
-          {{filiere.nom}}
-        </th>
-        <td class="px-6 py-4 text-right flex justify-start flex-col sm:flex-row sm:items-center">
-          <button (click)="set_update(filiere);this.showform=true;this.validationError=false;" type="button" class="flex items-center focus:outline-none text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 sm:mb-0 dark:focus:ring-blue-900">
+  <div *ngIf="this.filieres.length>0" class="mt-6 relative overflow-x-auto sm:rounded-lg">
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let filiere of filieres" class="rounded shadow-md p-6 bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+      <div class="font-bold text-xl mb-2">{{filiere.nom}}</div>
+        <div class="flex justify-between">
+          <button (click)="set_update(filiere);this.showform=true;this.validationError=false;" type="button" class="font-semibold hover:transition hover:bg-blue-800 text-white bg-blue-500 text-sm px-4 py-2 rounded">
             <i class="fa-solid fa-pen-to-square me-2"></i>
             Modifier
           </button>
-          <button (click)="deleteFiliere(filiere.id)" type="button" class="flex items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 sm:mb-0 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+          <button (click)="deleteFiliere(filiere.id)" type="button" class="font-semibold hover:transition hover:bg-red-800 text-white bg-red-500 text-sm px-2 py-1 rounded">
             <i class="fa-solid fa-trash me-2"></i>
             Supprimer
           </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </div>
+    </div>
+    </div>
   </div>
 </div>

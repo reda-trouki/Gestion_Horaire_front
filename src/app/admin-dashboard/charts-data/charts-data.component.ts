@@ -6,6 +6,7 @@ import {EnseignantesService} from "../../services/enseignantes.service";
 import {FilieresService} from "../../services/filieres.service";
 import {Filiere} from "../../../shared/models/Filiere";
 import {NgForOf} from "@angular/common";
+import {InterventionsService} from "../../services/interventions.service";
 Chart.register(...registerables);
 
 @Component({
@@ -23,12 +24,14 @@ export class ChartsDataComponent implements OnInit {
   protected modulesNumber : any;
   protected enseignantsNumber : any;
   protected fillieresNumber : any;
+  protected interventionsNumber: any;
   protected filieres : Filiere[] = [];
   protected selectedFiliereId: number | undefined;
   protected pieChart?: Chart<'pie', number[], unknown>;
   constructor(private modulesService: ModulesService,
               private enseignantService: EnseignantesService,
-              private filliereService: FilieresService
+              private filliereService: FilieresService,
+              private interventionService: InterventionsService
   ) {
 
   }
@@ -37,11 +40,13 @@ export class ChartsDataComponent implements OnInit {
       this.modulesService.countModules(),
       this.enseignantService.countEnseignants(),
       this.filliereService.countFilieres(),
+      this.interventionService.countInterventions(),
       this.filliereService.getFilieres()
-    ]).subscribe(([modulesData, enseignantsData,fillieresData,fillieres]) => {
+    ]).subscribe(([modulesData, enseignantsData,fillieresData,interventionsData, fillieres]) => {
       this.modulesNumber = modulesData;
       this.enseignantsNumber = enseignantsData;
       this.fillieresNumber = fillieresData;
+      this.interventionsNumber = interventionsData;
       this.filieres = fillieres;
       this.selectedFiliereId = this.filieres[0].id;
       this.updatePieChart(this.filieres[0].id);
@@ -59,7 +64,7 @@ export class ChartsDataComponent implements OnInit {
         labels: ['Modules', 'Enseignants', 'Interventions', 'Filliéres'],
         datasets: [{
           label: 'Total',
-          data: [this.modulesNumber, this.enseignantsNumber, 10, this.fillieresNumber],
+          data: [this.modulesNumber, this.enseignantsNumber, this.interventionsNumber, this.fillieresNumber],
           backgroundColor: [
             'rgba(59, 130, 246, 0.2)',
             'rgba(52, 211, 153, 0.2)',
@@ -90,11 +95,11 @@ export class ChartsDataComponent implements OnInit {
 
   updatePieChart(filiereId: number): void {
       this.filliereService.getModulesTotalHoursByFiliere(filiereId).subscribe(modules => {
-        console.log(modules);
+        //console.log(modules);
         const labels = modules.map((module: { moduleName: any; }) => module.moduleName);
         const data = modules.map((module: { totalHours: any; }) => module.totalHours);
-        console.log(labels);
-        console.log(data);
+        //console.log(labels);
+        //console.log(data);
         if (this.pieChart) {
           this.pieChart.destroy();
         }
