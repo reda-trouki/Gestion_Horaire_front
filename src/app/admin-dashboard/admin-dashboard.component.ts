@@ -3,18 +3,21 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {UserService} from "../services/user.service";
 import {CommonModule} from "@angular/common";
 import {User} from "../../shared/models/User";
+import { LoaderComponent } from '../loader/loader.component';
+
 
 @Component({
-  selector: 'app-admin-dashboard',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-  ],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css'
+    selector: 'app-admin-dashboard',
+    standalone: true,
+    templateUrl: './admin-dashboard.component.html',
+    styleUrl: './admin-dashboard.component.css',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        CommonModule,
+		LoaderComponent
+    ]
 })
 export class AdminDashboardComponent implements OnInit{
   isDropdownVisible: boolean = false;
