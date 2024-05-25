@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import {Observable} from "rxjs";
 import {AuthService} from "../services/auth/auth.service";
 import {FormsModule} from "@angular/forms";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -15,10 +17,11 @@ import {FormsModule} from "@angular/forms";
 export class LoginComponent {
   protected email = '';
   protected password = '';
-  token: Object = new Observable<string>();
+  authentication = false
   constructor(private authService : AuthService) {
   }
   authenticate() {
     this.authService.login({email: this.email, password: this.password});
+    this.authentication = true;
   }
 }

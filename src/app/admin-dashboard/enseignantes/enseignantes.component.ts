@@ -7,15 +7,18 @@ import { initFlowbite } from 'flowbite';
 import {EnseignantesService} from "../../services/enseignantes.service";
 import {User} from "../../../shared/models/User";
 import {UserService} from "../../services/user.service";
+import {ConfirmationComponent} from "../../confirmation/confirmation.component";
 
 @Component({
   selector: 'app-enseignants',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationComponent],
   templateUrl: './enseignantes.component.html',
   styleUrl: './enseignantes.component.css',
 })
 export class EnseignantesComponent implements OnInit {
+  showConfirmationModal = false;
+  itemToDelete: any = null;
 	showform:boolean = false;
 	action :string ='Ajouter';
 	enseignants : Enseignant[] =[];
@@ -112,9 +115,20 @@ export class EnseignantesComponent implements OnInit {
 			this.update()
 		}
 	}
-	deleteEnseignant(id: string) {
-		this.enseignantsService.deleteEnseignant(id).subscribe(() => {
-			this.enseignants = this.enseignants.filter(e => e.email !=id);
+	deleteEnseignant() {
+		this.enseignantsService.deleteEnseignant(this.itemToDelete).subscribe(() => {
+			this.enseignants = this.enseignants.filter(e => e.email !=this.itemToDelete);
+      this.closeConfirmationModal();
 		});
 	}
+
+  openConfirmationModal(item: any) {
+    this.showConfirmationModal = true;
+    this.itemToDelete = item;
+  }
+
+  closeConfirmationModal() {
+    this.showConfirmationModal = false;
+    this.itemToDelete = null;
+  }
 }

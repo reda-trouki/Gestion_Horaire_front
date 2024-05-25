@@ -7,12 +7,13 @@ import { Enseignant } from '../../../shared/models/Enseignant';
 import { EnseignantesService } from '../../services/enseignantes.service';
 import { Filiere } from '../../../shared/models/Filiere';
 import { FilieresService } from '../../services/filieres.service';
+import {ConfirmationComponent} from "../../confirmation/confirmation.component";
 
 
 @Component({
   selector: 'app-modules',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationComponent],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css'
 })
@@ -54,6 +55,8 @@ export class ModulesComponent {
 	action: string = 'Ajouter';
 	validationError: boolean = false;
 	validationMessage: string = '';
+  showConfirmationModal = false;
+  itemToDelete: any = null;
 	handleClick(){
 		this.validate();
 		if (this.action==='Ajouter') {
@@ -165,10 +168,20 @@ export class ModulesComponent {
 		);
 
 	}
-	delete(id: string) {
-		this.moduleService.delete(id).subscribe(
+	deleteModule() {
+		this.moduleService.delete(this.itemToDelete).subscribe(
 			() => {
-			this.modules = this.modules.filter(m => m.intitule !=id);
+			this.modules = this.modules.filter(m => m.intitule !=this.itemToDelete);
+      this.closeConfirmationModal();
 		});
 	}
+  openConfirmationModal(item: any) {
+    this.showConfirmationModal = true;
+    this.itemToDelete = item;
+  }
+
+  closeConfirmationModal() {
+    this.showConfirmationModal = false;
+    this.itemToDelete = null;
+  }
 }

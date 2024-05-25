@@ -8,10 +8,11 @@ import { EnseignantesService } from '../../services/enseignantes.service';
 import { Intervention } from '../../../shared/models/Intervention';
 import { InterventionsService } from '../../services/interventions.service';
 import { InterventionID } from '../../../shared/models/InterventionID';
+import {ConfirmationComponent} from "../../confirmation/confirmation.component";
 @Component({
   selector: 'app-interventions',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationComponent],
   templateUrl: './interventions.component.html',
   styleUrl: './interventions.component.css'
 })
@@ -53,6 +54,8 @@ export class InterventionsComponent {
 	action: string = 'Ajouter';
 	validationError: boolean = false;
 	validationMessage: string = '';
+  showConfirmationModal = false;
+  itemToDelete: any = null;
 	handleClick(){
 		this.validate();
 		if (this.action==='Ajouter') {
@@ -166,10 +169,20 @@ export class InterventionsComponent {
 		);
 
 	}
-	delete(id: InterventionID) {
-		this.interventionsService.delete(id.enseignantID,id.moduleID).subscribe(
+	deleteIntervention() {
+		this.interventionsService.delete(this.itemToDelete.enseignantID,this.itemToDelete.moduleID).subscribe(
 			() => {
-			this.interventions = this.interventions.filter(m => m.id !=id);
+			this.interventions = this.interventions.filter(m => m.id !=this.itemToDelete);
+      this.closeConfirmationModal();
 		});
 	}
+  openConfirmationModal(item: any) {
+    this.showConfirmationModal = true;
+    this.itemToDelete = item;
+  }
+
+  closeConfirmationModal() {
+    this.showConfirmationModal = false;
+    this.itemToDelete = null;
+  }
 }

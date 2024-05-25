@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {UserService} from "../services/user.service";
 import {CommonModule} from "@angular/common";
 import {User} from "../../shared/models/User";
@@ -21,9 +21,23 @@ import { LoaderComponent } from '../loader/loader.component';
 })
 export class AdminDashboardComponent implements OnInit{
   isDropdownVisible: boolean = false;
+  isSidebarHidden = true;
   protected user : User = this.userService.getUser();
+  protected sidebarLinks = [
+    { route: 'charts', label: 'Dashboard', icon: 'fa-solid fa-house' },
+    { route: 'filieres', label: 'Filières', icon: 'fa-solid fa-school' },
+    { route: 'modules', label: 'Modules', icon: 'fa-solid fa-books' },
+    { route: 'enseignants', label: 'Enseignantes', icon: 'fa-solid fa-chalkboard-user' },
+    { route: 'interventions', label: 'Interventions', icon: 'fa-solid fa-book-open-cover' }
+  ];
+
   constructor(private userService: UserService, private eRef: ElementRef) {}
 
+
+
+  toggleSidebar() {
+    this.isSidebarHidden = !this.isSidebarHidden;
+  }
   toggleDropdown(): void {
     this.isDropdownVisible = !this.isDropdownVisible;
   }
@@ -37,6 +51,5 @@ export class AdminDashboardComponent implements OnInit{
     this.userService.logout();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit() {}
 }

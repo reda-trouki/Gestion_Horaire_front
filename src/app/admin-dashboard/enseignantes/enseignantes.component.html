@@ -48,51 +48,67 @@
 		</form>
 	</div>
 
-	<div *ngIf="this.enseignants.length<=0" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+	<div *ngIf="this.enseignants.length<=0" class="p-4 mb-4 text-sm text-blue-800 rounded-md bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
 		<span class="font-medium">Aucun enseignant n'a été trouvé!</span> Veuillez créer des enseignants.
 	</div>
-	<div *ngIf="this.enseignants.length>0" class="mt-6 relative overflow-x-auto shadow-md sm:rounded-lg">
-		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+	<div *ngIf="this.enseignants.length>0" class="mt-6 relative overflow-x-auto shadow-md sm:rounded-sm">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+			<thead class="bg-gray-200 dark:bg-gray-700">
 				<tr>
-					<th scope="col" class="px-6 py-3 text-gray-900 ">
+					<th class="px-6 py-3 font-medium">
 						Nom de l'enseignant
 					</th>
-          <th>
+          <th class="px-6 py-3 font-medium">
             Prenom de l'enseignant
           </th>
-          <th>
+          <th class="px-6 py-3 font-medium">
             Role de l'enseignant
           </th>
-          <th>Email de l'enseignant</th>
-					<th scope="col" class="px-6 py-3 text-gray-900 ">
+          <th class="px-6 py-3 font-medium" >Email de l'enseignant</th>
+					<th class="px-6 py-3 font-medium">
 						Actions
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr *ngFor="let enseignant of enseignantsList"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-					<td scope="row" class="px-6 py-4 font-medium text-lg text-gray-900 whitespace-nowrap dark:text-white">
+				<tr *ngFor="let enseignant of enseignantsList"  class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+					<td class="px-6 py-4 font-semibold ">
 						{{enseignant.nom}}
 					</td>
-          <td>
+          <td class="px-6 py-4">
             {{enseignant.prenom}}
           </td>
-          <td>{{enseignant.role}}</td>
-          <td>
+          <td class="px-6 py-4">{{enseignant.role}}</td>
+          <td class="px-6 py-4">
             {{enseignant.email}}
           </td>
 
 					<td class="px-6 py-4 text-right flex justify-start">
-						<button (click)="set_update(enseignant);this.showform=true;this.validationError=false;"   type="button" class="flex items-center focus:outline-none text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-blue-900">
-							<i class="fa-solid fa-pen-to-square me-2"></i>
+						<button
+              (click)="set_update(enseignant);this.showform=true;this.validationError=false;"
+              type="button"
+              class="flex justify-center items-center hover:bg-white rounded-md px-2 hover:shadow-md"
+              >
+							<i class="fa-solid text-blue-500 text-2xl fa-pen-to-square me-2"></i>
 						</button>
-						<button (click)="deleteEnseignant(enseignant.email)" type="button" class="flex items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-							<i class="fa-solid fa-trash me-2"></i>
+						<button
+              (click)="openConfirmationModal(enseignant.email)"
+              type="button"
+              class="flex justify-center items-center hover:bg-white rounded-md px-2 hover:shadow-md"
+            >
+							<i class="fa-solid text-red-500 text-2xl fa-trash me-2"></i>
 						</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+    </div>
+    <app-confirmation
+      *ngIf="showConfirmationModal"
+      [show]="showConfirmationModal"
+      (confirm)="deleteEnseignant()"
+      (cancel)="closeConfirmationModal()"
+    ></app-confirmation>
 	</div>
 </div>

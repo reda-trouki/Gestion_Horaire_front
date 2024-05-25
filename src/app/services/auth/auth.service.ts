@@ -17,7 +17,6 @@ export class AuthService {
   login(credentials: { email: string; password: string }) {
     return this.http.post<{ token: string; refreshToken: string }>(`${this.url}/api/auth/authenticate`, credentials).subscribe(
       (response) => {
-        console.log(response)
         this.accessToken = response.token;
         this.refreshToken = response.refreshToken;
         // Store tokens in local storage or other storage

@@ -4,11 +4,12 @@ import { Filiere } from '../../../shared/models/Filiere';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { initFlowbite } from 'flowbite';
+import {ConfirmationComponent} from "../../confirmation/confirmation.component";
 
 @Component({
   selector: 'app-filieres',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationComponent],
   templateUrl: './filieres.component.html',
   styleUrl: './filieres.component.css'
 })
@@ -20,6 +21,8 @@ export class FilieresComponent implements OnInit {
 	filiere_nom:string = '';
 	validationError:boolean = false;
 	validationMessage:string = '';
+  showConfirmationModal= false;
+  itemToDelete: any = null;
 	constructor(private filieresService: FilieresService) {
 		this.filieresService.getFilieres().subscribe(filieres => this.filieres = filieres);
 	}
@@ -82,14 +85,24 @@ export class FilieresComponent implements OnInit {
 			this.update()
 		}
 	}
-	deleteFiliere(id: number) {
-		this.filieresService.deleteFiliere(id).subscribe(() => {
-			this.filieres = this.filieres.filter(f => f.id !=id);
+	deleteFiliere() {
+		this.filieresService.deleteFiliere(this.itemToDelete).subscribe(() => {
+			this.filieres = this.filieres.filter(f => f.id !=this.itemToDelete);
       this.validationMessage = 'filère supprimée avec succès';
+      this.closeConfirmationModal();
 		}, (error: { error: string; }) => {
       this.validationError = true;
       this.validationMessage = error.error;
       }
     );
 	}
+  openConfirmationModal(item: any) {
+    this.showConfirmationModal = true;
+    this.itemToDelete = item;
+  }
+
+  closeConfirmationModal() {
+    this.showConfirmationModal = false;
+    this.itemToDelete = null;
+  }
 }
